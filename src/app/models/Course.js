@@ -12,7 +12,7 @@ const Course = new Schema(
         image: { type: String, default: '', maxLength: 100 },
         videoId: { type: String, default: '', maxLength: 100 },
         level: { type: String, default: '', maxLength: 100 },
-        deletedAt: { },
+        deletedAt: {},
     },
     { timestamps: true },
 );
