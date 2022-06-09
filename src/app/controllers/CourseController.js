@@ -4,10 +4,10 @@ const { mongooseToObject } = require('../../util/mongoose');
 class CourseController {
     //[GET] /courses/show
     show(req, res, next) {
-        Course.findOne({ slug: req.params.slug })
+        Course.findOne({ slug: req.params.slug }).lean()
             .then(function (course) {
                 res.render('courses/show', {
-                    course: mongooseToObject(course),
+                    course, //: mongooseToObject(course),
                 });
             })
             .catch(next);
@@ -20,7 +20,7 @@ class CourseController {
 
     //[POST] /courses/store
     store(req, res, next) {
-        const formData = req.body;
+        const formData = { ...req.body };
         formData.image = `https://img.youtube.com/vi/${formData.videoId}/sddefault.jpg`;
         const course = new Course(formData);
         course
@@ -28,15 +28,15 @@ class CourseController {
             .then(() => {
                 res.redirect('/me/stored/courses');
             })
-            .catch((err) => {});
+            .catch(next);
     }
 
     //[GET] /courses/:id/edit
     edit(req, res, next) {
-        Course.findById(req.params.id)
+        Course.findById(req.params.id).lean()
             .then((course) => {
                 res.render('courses/edit', {
-                    course: mongooseToObject(course),
+                    course: course, //: mongooseToObject(course),
                 });
             })
             .catch(next);

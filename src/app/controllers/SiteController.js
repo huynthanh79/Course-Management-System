@@ -1,14 +1,15 @@
 const res = require('express/lib/response');
 const Course = require('../models/Course');
-const { mutipleMongooseToObject } = require('../../util/mongoose');
+//const { mutipleMongooseToObject } = require('../../util/mongoose');
 
 class SiteController {
     //[Get] /home
     home(req, res, next) {
         Course.find({})
+            .lean()
             .then((courses) => {
                 res.render('home', {
-                    courses: mutipleMongooseToObject(courses),
+                    courses: courses, //: mutipleMongooseToObject(courses),
                 });
             })
             .catch(next);

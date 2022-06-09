@@ -5,8 +5,8 @@ const { mutipleMongooseToObject } = require('../../util/mongoose');
 class MeController {
     //[Get] /me/stored/courses
     storedCourses(req, res, next) {
-        Promise.all([Course.find({}), Course.countDocumentsDeleted()])
-            .then(([courses, deletedCount]) => {
+        Promise.all([Course.find({}), Course.countDocumentsDeleted()]) // xử lý bất đồng bộ bằng promise.all()
+            .then(([courses, deletedCount]) => {//dùng distructuring js
                 res.render('me/stored_courses', {
                     deletedCount,
                     courses: mutipleMongooseToObject(courses),

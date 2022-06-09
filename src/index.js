@@ -6,8 +6,8 @@ const exphbs = require('express-handlebars');
 const app = express();
 const port = 3000;
 
-    const route = require('./routes');
-    const db = require('./config/db');
+const route = require('./routes');
+const db = require('./config/db');
 
 //Connect to DB
 db.connect();
@@ -23,7 +23,7 @@ app.use(express.json());
 app.use(methodOverride('_method'));
 
 //HTTP logger
-app.use(morgan('combined'));
+//app.use(morgan('combined'));
 
 //Template engine
 app.engine(
@@ -43,6 +43,7 @@ app.engine(
                     '%': lvalue % rvalue,
                 }[operator];
             },
+            //sum: (a, b) => a + b,
         },
     }),
 );

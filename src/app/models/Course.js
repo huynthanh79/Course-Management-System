@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const slug = require('mongoose-slug-generator');
-const mongooseDelete = require('mongoose-delete');
+const slug = require('mongoose-slug-generator'); //thư viện hỗ trợ tự động tạo slug từ attribute cụ thể
+const mongooseDelete = require('mongoose-delete'); //thư viện hỗ trợ soft delete
 
 const Schema = mongoose.Schema;
 

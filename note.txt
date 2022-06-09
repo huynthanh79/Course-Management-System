@@ -1,0 +1,61 @@
+tổ chức thư mục của project:
+    - đầu tiên cần tạo file package.json bằng lệnh npm init
+    - tiếp theo cần tải các thư viện cần thiết như: express (framework), dotenv, 
+    express-handlebars, method-override, nodemon, morgan, ...
+    - config lại file package.json. sửa tại script và main
+    - tổ chức thư mục resource bên trong thư mục src. thư mục resource sẽ chứa thư mục scss và views 
+    là các thư mục chứa các file html css
+    - config lại đường dẫn cho thư mục view và sửa lại file package.json (nếu cần)
+    - tạo static file bằng express.static
+    - tải thư viện sass (npm i --save-dev sass) để có thể render code css từ scss. Sửa file 
+    package.json tại script (lưu ý sass chỉ xử dụng shortcode)
+    - [có thể thêm file nodemon.json để có thể reset lại server khi có sự thay đổi các file có
+    định dạng đc chỉ định trong file nodemon.json]
+    - tích hợp bootstrap vào project bằng thẻ link và thẻ script trong file main.hbs
+    - Tạo folder routers để lưu các file js định tuyến cho web site
+    - Tạo folder app/controllers folder controllers sẽ chứa các file xử lý của tầng controller trong
+    mô hình MVC.
+    - Tạo các file trong routers và controllers hầu như phụ thuộc vào nguồn tài nguyên (tức là table name
+    nằm trong database). EX: có table name là: course thì sẽ có 1 router là course.js và 1 file 
+    CourseController.js tương ứng với routers và controllers.
+    - Tạo file index.js trong folder routers để chứa cái định tuyến từ file index.js gốc (đây là cách
+    làm gọn code trong file index.js gốc). Để làm được việc này cần phải tạo function trong file
+    routers/index.js và exports nó ra để có thể sử dụng ở file src/index.js (bằng cách require)
+    - Tạo folder config/db để chứa file config kết nối đến db. Tùy vào loại database được chọn mà có cách 
+    kết nối khác nhau.
+    - Tạo folder models chứa các model.js dựa trên database cần dùng.
+    - Tạo folder util chứa file xử lý các object dưới db thành các object thường.
+    - Install thư viện method-override
+
+# lưu ý: - trước khi chạy project cần chạy 2 dòng lệnh ở 2 của sổ terminals khác nhau:
+    npm start: để chạy server 
+    npm run watch: để chạy sass thực hiện tự động render code vào file css
+- Method mặc định của trình duyệt gửi lên server là GET. Phương thức GET dùng để
+lấy dữ liệu từ server. Dựa vào router để có thể xác định được là dữ liệu nào sẽ được trả về từ server
+- Query parameter: ?q=...&author=...&ref=...
+- Form default behavior: Get methor and action default
+- Lấy dữ liệu từ form dât ta dùng req.body, nhưng cần khai báo app.use(express.urlencode()) (từ thư viện body parse) 
+để có thể lấy dữ liệu thông qua req.body. Ngoài ra cần khai báo app.use(express.json()) để có thể submit 
+dữ liệu từ code js sử dụng các thư viện như XMLHttpRequest, fetch, axios, ... 
+- Mô hình MVC: 
+    + View: Chỉ chứa file code UI (html, css)
+    + Model: tương tác với data source(mySQL, MongoDB, SQL Server, ...)
+    + Controller: Nơi kết hợp giữa Model và View tương ứng để trả về UI hoàn chỉnh có chứa dữ liệu
+    cho người dùng
+- Req chứa thông tin request từ ứng dụng gửi đến server res chứa thông tin response từ server gửi 
+trở lại ứng dụng có thể thông qua 2 biến này để thay đổi nội dung request or response được gửi đi
+- Trong routers/index.js phải dùng app.use() (ko dùng app.get())
+- Thư viện prettier, lint staged, husky giúp format lại code (chỉ là thư viện hỗ trợ)
+- Thư viện handlebars giúp kết hợp giữa data được trả về từ model và code html css từ view để ra được
+UI cho người dùng. Cần học cách lặp các phần tử cửa arr được trả về từ model bằng handlebars
+- Có 3 cách truyền dữ liệu: + dùng query parameter => req.query
+                            + dùng POST method => req.body
+                            + dùng :slug => req.params
+- GET: gửi dữ liệu lên server và yêu cầu server gửi lại dữ liệu được yêu cầu
+- POST: gửi dữ liệu lên server và yêu cầu server tạo mới dữ liệu gửi lên
+- PUT: gửi yêu cầu chỉnh sửa dữ liệu lên server (thay thế cả 1 object)
+- PATCH: gửi yêu cầu chỉnh sửa dữ liệu lên server (sửa theo từng trường cụ thể)
+- Thư viện method-override: dùng để chuyển phương thức khác GET, POST thành các phương thức khác như:
+PUT, PATCH, ... Vì HTML chỉ hỗ trợ 2 phương thức là GET, POST
+- Promise.all([mảng các promise]) giúp xử lý bất đồng bộ (tức là có 2 promise trong cùng một function
+và ta muốn 2 promise này chạy đồng bộ với nhau)
