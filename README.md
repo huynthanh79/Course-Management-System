@@ -1,4 +1,4 @@
 # Course Management System
 
-Hệ thống quản lý khóa học
+An application that helps users manage courses effectively.
 
